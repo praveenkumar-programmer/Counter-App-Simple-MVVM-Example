@@ -3,26 +3,24 @@ package com.geeks4ever.counter_app.viewmodel;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 
 import com.geeks4ever.counter_app.model.CountModel;
 import com.geeks4ever.counter_app.model.repository.CountRepository;
 
 import java.util.Objects;
 
-public class CounterViewModel extends AndroidViewModel {
+public class CounterViewModel extends ViewModel {
 
     private final CountRepository countRepository;
 
     final MutableLiveData<String> count = new MutableLiveData<>();
     final LiveData<CountModel> data;
 
-    public CounterViewModel(@NonNull Application application) {
-        super(application);
-
+    public CounterViewModel() {
         countRepository = CountRepository.getInstance();
         data = countRepository.getCount();
         data.observeForever( new Observer<CountModel>() {
