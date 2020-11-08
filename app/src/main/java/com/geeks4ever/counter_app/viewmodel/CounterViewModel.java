@@ -43,8 +43,10 @@ public class CounterViewModel extends ViewModel {
 
     public int DecrementCount(){
         int countint = Integer.parseInt(Objects.requireNonNull(count.getValue()));
-        countint--;
-        countRepository.setCount(countint);
+        if (countint > 0){
+            countint--;
+            countRepository.setCount(countint);
+        }
         return countint;
     }
 
