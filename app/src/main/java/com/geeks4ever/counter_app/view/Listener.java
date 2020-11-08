@@ -4,5 +4,7 @@ import android.view.View;
 
 public interface Listener {
 
-    void onClick(View view);
+    void Increment(View view);
+
+    void MeltDown(View view);
 }

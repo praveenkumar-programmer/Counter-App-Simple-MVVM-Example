@@ -42,7 +42,12 @@ public class HomeScreen extends AppCompatActivity implements Listener {
     }
 
     @Override
-    public void onClick(View view) {
+    public void Increment(View view) {
         viewModel.IncrementCount();
+    }
+
+    @Override
+    public void MeltDown(View view) {
+        viewModel.MeltDown();
     }
 }
