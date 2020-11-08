@@ -8,11 +8,12 @@ import com.geeks4ever.counter_app.model.CountModel;
 public class CountRepository {
 
     public static CountRepository repository;
-    private CountModel countModel;
+    private final CountModel countModel;
 
     final MutableLiveData<CountModel> data = new MutableLiveData<>();
 
     private CountRepository(){
+        countModel = new CountModel();
         countModel.setCount("0");
     }
 

@@ -25,7 +25,7 @@ public class CounterViewModel extends AndroidViewModel {
 
         countRepository = CountRepository.getInstance();
         data = countRepository.getCount();
-        data.observe(getApplication(), new Observer<CountModel>() {
+        data.observeForever( new Observer<CountModel>() {
             @Override
             public void onChanged(CountModel countModel) {
                 count.setValue(countModel.getCount());
