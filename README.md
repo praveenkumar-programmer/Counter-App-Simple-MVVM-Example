@@ -9,4 +9,4 @@ A simple Counter App to demonstrate **MVVM** in android
   
   
   
-![screenshot](sample (1).gif)
+![screenshot](sample.gif)
