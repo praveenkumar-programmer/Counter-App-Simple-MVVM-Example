@@ -1,43 +1,54 @@
 package com.geeks4ever.counter_app.model.repository;
 
+import android.app.Application;
+import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.geeks4ever.counter_app.model.CountModel;
 
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class CountRepository {
 
-    public static CountRepository repository;
-    private final CountModel countModel;
+    private CountDao countDao;
+    private LiveData<List<CountModel>> countModelLiveData;
 
-    final MutableLiveData<CountModel> data = new MutableLiveData<>();
+    public CountRepository(Application application){
 
-    private CountRepository(){
-        countModel = new CountModel();
-        countModel.setCount("0");
+        countDao = CountDatabase.getInstance(application).countDao();
+        countModelLiveData = countDao.getCount();
+
     }
 
-    //Singleton Implementation
-    public static CountRepository getInstance(){
-
-
-        if(repository == null)
-            repository = new CountRepository();
-        return repository;
-    }
-
-
-    public LiveData<CountModel> getCount(){
-        data.setValue(countModel);
-        return data;
+    public LiveData<List<CountModel>> getCount(){
+        return countModelLiveData;
     }
 
     public void setCount(int count){
+        new SetCountAsyncTask(countDao).execute(new CountModel(0, String.valueOf(count)));
+    }
 
-        countModel.setCount(String.valueOf(count));
-        data.postValue(countModel);
+    private static class SetCountAsyncTask extends AsyncTask<CountModel, Void, Void>{
+
+        private CountDao countDao;
+
+        private SetCountAsyncTask(CountDao countDao){
+            this.countDao = countDao;
+        }
+
+        @Override
+        protected Void doInBackground(CountModel... countModels) {
+            countDao.setCount(countModels[0]);
+            return null;
+        }
     }
 
 }

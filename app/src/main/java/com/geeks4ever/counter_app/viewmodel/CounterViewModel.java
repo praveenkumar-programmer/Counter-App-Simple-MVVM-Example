@@ -1,36 +1,46 @@
 package com.geeks4ever.counter_app.viewmodel;
 
+import android.app.Application;
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.geeks4ever.counter_app.model.CountModel;
+import com.geeks4ever.counter_app.model.repository.CountDatabase;
 import com.geeks4ever.counter_app.model.repository.CountRepository;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CounterViewModel extends ViewModel {
+public class CounterViewModel extends AndroidViewModel {
 
     private final CountRepository countRepository;
 
     ExecutorService executorService;
 
     final MutableLiveData<String> count = new MutableLiveData<>();
-    final LiveData<CountModel> data;
 
-    public CounterViewModel() {
-        countRepository = CountRepository.getInstance();
-        data = countRepository.getCount();
-        data.observeForever( new Observer<CountModel>() {
+    public CounterViewModel(@NonNull Application application) {
+        super(application);
+
+        count.setValue("0");
+
+        countRepository = new CountRepository(application);
+        countRepository.getCount().observeForever( new Observer<List<CountModel>>() {
             @Override
-            public void onChanged(CountModel countModel) {
-                count.setValue(countModel.getCount());
+            public void onChanged(List<CountModel> countModel) {
+                count.setValue(countModel.get(0).getCount());
             }
         });
     }
+
 
     public LiveData<String> getCount(){
         return count;
