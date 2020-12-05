@@ -21,7 +21,6 @@ public abstract class CountDatabase extends RoomDatabase {
     public static synchronized CountDatabase getInstance(Context context){
 
         if(db == null){
-            Log.e("db", "created");
             db = Room.databaseBuilder(context.getApplicationContext(),
                     CountDatabase.class, "count_db")
                     .fallbackToDestructiveMigration()

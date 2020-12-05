@@ -22,12 +22,9 @@ public class CountModel {
     }
 
     public String getCount(){
-        Log.e("db", "getCount"+this.count);
         return this.count;
     }
 
     public void setCount(String count){
-
-        Log.e("db", "setCount"+count);
         this.count = count;}
 }
