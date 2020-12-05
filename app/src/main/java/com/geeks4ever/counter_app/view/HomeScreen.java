@@ -12,7 +12,6 @@ import android.view.View;
 import com.geeks4ever.counter_app.R;
 import com.geeks4ever.counter_app.databinding.HomeScreenBinding;
 import com.geeks4ever.counter_app.viewmodel.CounterViewModel;
-import com.geeks4ever.counter_app.viewmodel.viewModelFactory;
 
 public class HomeScreen extends AppCompatActivity implements Listener {
 
@@ -28,7 +27,8 @@ public class HomeScreen extends AppCompatActivity implements Listener {
 
         binding.setListeners(this);
 
-        viewModel = new ViewModelProvider(this, new viewModelFactory()).get(CounterViewModel.class);
+        viewModel = new ViewModelProvider(this, new ViewModelProvider
+                .AndroidViewModelFactory(getApplication())).get(CounterViewModel.class);
 
         count = viewModel.getCount();
 
