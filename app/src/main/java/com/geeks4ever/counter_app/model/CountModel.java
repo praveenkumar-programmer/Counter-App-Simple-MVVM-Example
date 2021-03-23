@@ -1,8 +1,5 @@
 package com.geeks4ever.counter_app.model;
 
-import android.util.Log;
-
-import androidx.lifecycle.LiveData;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -24,7 +21,4 @@ public class CountModel {
     public String getCount(){
         return this.count;
     }
-
-    public void setCount(String count){
-        this.count = count;}
 }

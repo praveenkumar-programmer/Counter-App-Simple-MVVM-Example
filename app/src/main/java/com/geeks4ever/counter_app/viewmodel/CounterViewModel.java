@@ -1,17 +1,14 @@
 package com.geeks4ever.counter_app.viewmodel;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 
 import com.geeks4ever.counter_app.model.CountModel;
-import com.geeks4ever.counter_app.model.repository.CountDatabase;
 import com.geeks4ever.counter_app.model.repository.CountRepository;
 
 import java.util.List;
@@ -36,7 +33,8 @@ public class CounterViewModel extends AndroidViewModel {
         countRepository.getCount().observeForever( new Observer<List<CountModel>>() {
             @Override
             public void onChanged(List<CountModel> countModel) {
-                count.setValue(countModel.get(0).getCount());
+                if(!countModel.isEmpty())
+                    count.setValue(countModel.get(0).getCount());
             }
         });
     }
